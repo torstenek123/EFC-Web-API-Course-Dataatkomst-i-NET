@@ -1,0 +1,26 @@
+Steps from previous lesson
+
+1. Include Logger information in appsettings.json
+
+2. Add constructors to csFriendsServiceOther1 and csFriendsServiceOther2 that 
+   injects a logger service. Save the logger service in a private field.
+   From the new constructor call the default constructor to reuse the initialization
+   Notice how the new constructor is now used without any further code change.
+
+3. Add logging to the constructors at levels Information, Warning, Error and Critical
+
+4. Modify in appsettings.json to show which log level to use
+   NOTE: you have to use dotnet run command as a release verions uses appsettings.json
+
+5. Add constructors to HealthController that injects a logger service.
+
+6. Log Heartbeat and DIExplore2 information
+
+7. Add csInMemoryLoggerProvider through DI
+
+8. Modify HealthController.Log to show InMemory Log
+
+
+
+
+
