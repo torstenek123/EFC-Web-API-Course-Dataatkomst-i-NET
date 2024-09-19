@@ -1,0 +1,2 @@
+Open workspace file
+Run and debug in AppGoodFriendsWebApi
