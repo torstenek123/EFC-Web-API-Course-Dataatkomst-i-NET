@@ -6,14 +6,14 @@ namespace Models
 {
 	public class csLocality : ILocality, ISeed<csLocality>, IEquatable<csLocality>
     {
-        public virtual Guid LocalityId { get; set; } = Guid.NewGuid();
+        public virtual Guid LocalityId { get; set; }
 
         public virtual string StreetAddress { get; set; }
         public virtual int ZipCode { get; set; }
         public virtual string City { get; set; }
         public virtual string Country { get; set; }
         public bool Seeded { get; set; } = false;
-        public List<IAttraction> attractions { get; set; }
+        public virtual List<IAttraction> Attractions { get; set; }
 
         public override string ToString() => $"{StreetAddress}, {ZipCode} {City}, {Country}";
 
@@ -45,6 +45,7 @@ namespace Models
 
         public virtual csLocality Seed(csSeedGenerator sgen)
         {
+            LocalityId = Guid.NewGuid();
             Seeded = true;
             Country = sgen.Country;
             StreetAddress = sgen.StreetAddress(Country);

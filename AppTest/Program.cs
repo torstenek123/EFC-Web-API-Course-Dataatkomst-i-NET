@@ -10,10 +10,12 @@ Console.WriteLine("AppTest");
 var _seeder = new csSeedGenerator();
 
 
-System.Console.WriteLine("\nAttractions:");
+System.Console.WriteLine("\nUsers:");
 var _attractions = _seeder.UniqueItemsToList<csAttractionDbM>(5);
 foreach (var item in _attractions){
-    item.CommentsDbM = _seeder.ItemsToList<csCommentDbM>(5);
+    item.CommentsDbM  = _seeder.UniqueItemsToList<csCommentDbM>(_seeder.Next(0,21));
     System.Console.WriteLine(item);
 }
 
+//todo:
+//öndra commentsdbm att inte tillåta null userid

@@ -3,30 +3,27 @@ using System.Diagnostics.Metrics;
 
 using Seido.Utilities.SeedGenerator;
 namespace Models{
-    public enum categories{
+    public enum enCategories{
         Park, Slop, Café, Restaurant, Museum, Beach, Bar, Hotel, Library, Zoo, Garden 
     }
-    public enum adjectives {
-        Calm, Bright, Cozy, Spacious, Elegant, Vibrant, Quiet, 
-        Charming, Lively, Serene, Bold, Warm, Sleek, Modern,
-    }
+
     public class csAttraction : IAttraction, ISeed<csAttraction>, IEquatable<csAttraction>{
 
         public virtual Guid AttractionId { get; set; } = Guid.NewGuid();
-        public virtual string name {get; set;}
-        public virtual List<IComment> comments {get;set;}
-        public virtual string category {get; set;}
-        public virtual string description {get; set;}
-        public virtual ILocality locality {get; set;}
+        public virtual string Name {get; set;}
+        public virtual List<IComment> Comments {get;set;}
+        public virtual enCategories Category {get; set;}
+        public virtual string Description {get; set;}
+        public virtual ILocality Locality {get; set;}
         
 
-        //save for after debug if (comments!=null) comments.ForEach(c => retStr += $"\n{c.ToString()}");
+        //save for after debug if (Comments!=null) Comments.ForEach(c => retStr += $"\n{c.ToString()}");
         public override string ToString()  {
-            string retStr = $"{name}\nCategory: {category}\nDescription: {description}\nComments:";
+            string retStr = $"{Name}\nCategory: {Category}\nDescription: {Description}\nComments:";
             string strComments = "";
-            if (comments!=null)
+            if (Comments!=null)
             {
-                foreach(var comment in comments) {
+                foreach(var comment in Comments) {
                     strComments += $"\n{comment.ToString()}";
                 }
                 retStr += strComments;
@@ -42,22 +39,22 @@ namespace Models{
 
             Seeded = true;
             AttractionId = Guid.NewGuid();
-            category = sgen.FromEnum<categories>().ToString();
-            name = $"{sgen.FullName}'s {sgen.FromEnum<adjectives>()} {category}";
+            Category = sgen.FromEnum<enCategories>();
+            Name = $"{sgen.FullName}'s {sgen.Adjective} {Category}";
             string oneLatinSentenceOrWrd = sgen.Bool ? $"sentence: {sgen.LatinSentence}" : $"word: {sgen.LatinWords(1).FirstOrDefault()}";
-            description = $"{name} can be described in one {oneLatinSentenceOrWrd}";
+            Description = $"{Name} can be described in one {oneLatinSentenceOrWrd}";
 
             return this;
         }
         #endregion
 
         #region IEquatable
-        public bool Equals(csAttraction other) => (other != null) ? ((comments, category, name, description) ==
-            (other.comments, other.category, other.name, other.description)) : false;
+        public bool Equals(csAttraction other) => (other != null) ? ((Comments, Category, Name, Description) ==
+            (other.Comments, other.Category, other.Name, other.Description)) : false;
         
         public override bool Equals(object obj) => Equals(obj as csAttraction);
 
-        public override int GetHashCode() => (comments, category, name, description).GetHashCode();
+        public override int GetHashCode() => (Comments, Category, Name, Description).GetHashCode();
         #endregion
     }
 }

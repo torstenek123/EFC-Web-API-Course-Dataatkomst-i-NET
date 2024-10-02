@@ -25,28 +25,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<ILoggerProvider, csInMemoryLoggerProvider>();
 #endregion
 
-#region Dependency Inject FriendsService
-//Services are typically added as Scoped as one scope is a Web client request
-//- Transient objects are always different in the IndexModel and in the middleware.
-//- Scoped objects are the same for a given request but differ across each new request.
-//- Singleton objects are the same for every request.
+#region Dependency Inject services and repo
 
-//DI injects the DbRepos into csFriendService
-//Services are typically added as Scoped as one scope is a Web client request
-//builder.Services.AddScoped<csFriendsDbRepos>();
+builder.Services.AddScoped<csAttractionDbRepos>();
 
-//WebController have a matching constructor, so service must be created
-//Services are typically added as Scoped as one scope is a Web client request
-//builder.Services.AddSingleton<IFriendsService, csFriendsServiceOther1>();
-//builder.Services.AddScoped<IFriendsService, csFriendsServiceOther1>();
-//builder.Services.AddSingleton<IFriendsService, csFriendsServiceOther2>();
-//builder.Services.AddScoped<IFriendsService, csFriendsServiceOther2>();
-builder.Services.AddScoped<ISeedDbRepos, csSeedDbRepos>();
-builder.Services.AddScoped<ISeedDataService, csSeedDataService>();
+builder.Services.AddScoped<IAttractionDataService, csAttractionDataService>();
 #endregion
 
-#region Dependency Inject LoginService
-#endregion
 
 var app = builder.Build();
 

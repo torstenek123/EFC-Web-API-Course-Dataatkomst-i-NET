@@ -36,6 +36,15 @@ namespace SeedGenerator
     {
         csSeedJsonContent _seeds = null;
 
+        #region Adjectives
+        public enum csAdjectives
+        {
+            Calm, Bright, Cozy, Spacious, Elegant, Vibrant, Quiet, 
+            Charming, Lively, Serene, Bold, Warm, Sleek, Modern, Angry,
+            
+        }
+        public string Adjective => FromEnum<csAdjectives>().ToString();
+        #endregion
         #region Names
         public string PetName => _seeds._names.PetNames[this.Next(0, _seeds._names.PetNames.Count)];
         public string FirstName => _seeds._names.FirstNames[this.Next(0, _seeds._names.FirstNames.Count)];
@@ -526,7 +535,12 @@ namespace SeedGenerator
                     {
                         jsonQuote = "Procrastinate now, don't put it off.",
                         jsonAuthor = "Ellen DeGeneres"
-                    }
+                    },
+                    new csSeedQuote
+                    {
+                        jsonQuote = "This is my comment, there are many like this but this one's mine",
+                        jsonAuthor = "Anthony Swofford"
+                    } 
                 },
                 _latin = new List<csSeedLatin> {
                         new csSeedLatin {  jsonParagraph =

@@ -14,15 +14,19 @@ namespace DbContext.Migrations.SqlServerDbContext
             migrationBuilder.EnsureSchema(
                 name: "supusr");
 
+            migrationBuilder.EnsureSchema(
+                name: "dbo");
+
             migrationBuilder.CreateTable(
                 name: "Localities",
+                schema: "supusr",
                 columns: table => new
                 {
                     LocalityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StreetAddress = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    StreetAddress = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(200)", nullable: false),
                     ZipCode = table.Column<int>(type: "int", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(200)", nullable: true),
-                    Country = table.Column<string>(type: "nvarchar(200)", nullable: true),
                     Seeded = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -32,13 +36,15 @@ namespace DbContext.Migrations.SqlServerDbContext
 
             migrationBuilder.CreateTable(
                 name: "Users",
+                schema: "dbo",
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(200)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(200)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(200)", nullable: true),
-                    Role = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    Role = table.Column<int>(type: "int", nullable: false),
+                    strRole = table.Column<string>(type: "nvarchar(200)", nullable: true),
                     Seeded = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -52,10 +58,11 @@ namespace DbContext.Migrations.SqlServerDbContext
                 columns: table => new
                 {
                     AttractionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    name = table.Column<string>(type: "nvarchar(200)", maxLength: 50, nullable: false),
-                    category = table.Column<string>(type: "nvarchar(200)", maxLength: 30, nullable: false),
-                    description = table.Column<string>(type: "nvarchar(200)", maxLength: 500, nullable: false),
                     LocalityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    Category = table.Column<int>(type: "int", nullable: false),
+                    strCategory = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
                     Seeded = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -64,6 +71,7 @@ namespace DbContext.Migrations.SqlServerDbContext
                     table.ForeignKey(
                         name: "FK_Attractions_Localities_LocalityId",
                         column: x => x.LocalityId,
+                        principalSchema: "supusr",
                         principalTable: "Localities",
                         principalColumn: "LocalityId",
                         onDelete: ReferentialAction.Cascade);
@@ -71,31 +79,40 @@ namespace DbContext.Migrations.SqlServerDbContext
 
             migrationBuilder.CreateTable(
                 name: "Comments",
+                schema: "supusr",
                 columns: table => new
                 {
                     CommentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AttractionDbMAttractionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserDbMUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Comment = table.Column<string>(type: "nvarchar(200)", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AttractionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Seeded = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.CommentId);
                     table.ForeignKey(
-                        name: "FK_Comments_Attractions_AttractionDbMAttractionId",
-                        column: x => x.AttractionDbMAttractionId,
+                        name: "FK_Comments_Attractions_AttractionId",
+                        column: x => x.AttractionId,
                         principalSchema: "supusr",
                         principalTable: "Attractions",
                         principalColumn: "AttractionId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Comments_Users_UserDbMUserId",
-                        column: x => x.UserDbMUserId,
+                        name: "FK_Comments_Users_UserId",
+                        column: x => x.UserId,
+                        principalSchema: "dbo",
                         principalTable: "Users",
-                        principalColumn: "UserId");
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attractions_AttractionId",
+                schema: "supusr",
+                table: "Attractions",
+                column: "AttractionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Attractions_LocalityId",
@@ -104,31 +121,66 @@ namespace DbContext.Migrations.SqlServerDbContext
                 column: "LocalityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_AttractionDbMAttractionId",
+                name: "IX_Comments_AttractionId_CommentId",
+                schema: "supusr",
                 table: "Comments",
-                column: "AttractionDbMAttractionId");
+                columns: new[] { "AttractionId", "CommentId" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_UserDbMUserId",
+                name: "IX_Comments_CommentId",
+                schema: "supusr",
                 table: "Comments",
-                column: "UserDbMUserId");
+                column: "CommentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_CommentId_AttractionId",
+                schema: "supusr",
+                table: "Comments",
+                columns: new[] { "CommentId", "AttractionId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_CommentId_UserId",
+                schema: "supusr",
+                table: "Comments",
+                columns: new[] { "CommentId", "UserId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_UserId_CommentId",
+                schema: "supusr",
+                table: "Comments",
+                columns: new[] { "UserId", "CommentId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Localities_LocalityId",
+                schema: "supusr",
+                table: "Localities",
+                column: "LocalityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_UserId",
+                schema: "dbo",
+                table: "Users",
+                column: "UserId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Comments");
+                name: "Comments",
+                schema: "supusr");
 
             migrationBuilder.DropTable(
                 name: "Attractions",
                 schema: "supusr");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Users",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Localities");
+                name: "Localities",
+                schema: "supusr");
         }
     }
 }

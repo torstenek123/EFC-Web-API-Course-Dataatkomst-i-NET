@@ -19,20 +19,38 @@ namespace AppWebApi.Controllers
     public class SeedController : Controller
     {
 
-        ISeedDataService _service = null;
+        IAttractionDataService _service = null;
         ILogger<SeedController> _logger;
 
-        //GET: api/admin/seed?count={count}
+        //GET: 
         [HttpGet()]
-        [ActionName("MasterSeed")]
-        [ProducesResponseType(200, Type = typeof(string))]
+        [ActionName("CreateSeed")]
+        [ProducesResponseType(200, Type = typeof(seedInfoDto))]
         [ProducesResponseType(400, Type = typeof(string))]
-        public async Task<IActionResult> MasterSeed()
+        public async Task<IActionResult> CreateSeed()
         {
             try
             {
-                _service.MasterSeed();
-                return Ok("Seeded");           
+                var _info = await _service.CreateSeed();
+                return Ok(_info);           
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet()]
+        [ActionName("RemoveSeed")]
+        [ProducesResponseType(200, Type = typeof(deleteSeedInfoDto))]
+        [ProducesResponseType(400, Type = typeof(string))]
+        public async Task<IActionResult> RemoveSeed(string seeded = "true")
+        {
+            try
+            {
+                bool _seeded = bool.Parse(seeded);
+                var _info = await _service.RemoveSeed(_seeded);
+                return Ok(_info);           
             }
             catch (Exception ex)
             {
@@ -41,10 +59,9 @@ namespace AppWebApi.Controllers
         }
 
 
-
         #region constructors
         
-        public SeedController(ISeedDataService service, ILogger<SeedController> logger)
+        public SeedController(IAttractionDataService service, ILogger<SeedController> logger)
         {
             _service = service;
             _logger = logger;

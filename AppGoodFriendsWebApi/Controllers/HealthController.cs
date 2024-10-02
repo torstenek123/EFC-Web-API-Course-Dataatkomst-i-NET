@@ -20,21 +20,6 @@ namespace AppWebApi.Controllers
     [Route("[controller]/[action]")]
     public class HealthController : Controller
     {
-        const string _seedSource = "./friends-seeds.json";
-
-        // GET: health/apptest
-        [HttpGet()]
-        [ActionName("AppTest")]
-        [ProducesResponseType(200, Type = typeof(string))]
-        public IActionResult AppTest()
-        {
-            string sRet = "AppTest\n";
-
-            var fn = Path.GetFullPath(_seedSource);
-            var _seeder = new csSeedGenerator(fn);
-
-            return Ok(sRet);
-        }
 
         // GET: health/heartbeat
         [HttpGet()]
@@ -71,7 +56,7 @@ namespace AppWebApi.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<csLogMessage>))]
         public async Task<IActionResult> Log([FromServices] ILoggerProvider _loggerProvider)
         {
-            //Note the way to get the LoggerProvider, not the logger from Services via DI
+            
             if (_loggerProvider is csInMemoryLoggerProvider cl)
             {
                 return Ok(await cl.MessagesAsync);
@@ -85,33 +70,9 @@ namespace AppWebApi.Controllers
         }
 
         #region constructors
-        public HealthController()
-        {
-        }
-        /*
-        public HealthController(IFriendsService service)
-        {
-            _service = service;
-        }
-        
-        public HealthController(IFriendsService service, ILogger<FriendsController> logger)
-        {
-            _service = service;
-            _logger = logger;
-        }
-        */
+        public HealthController(){}
         #endregion
     }
 }
 
-/* Exercise
-1. Add below structue to appsettings.json
-  "MyName": {
-    "FirstName": "your name",
-    "LastName": "your name",
-    "Age": your_age
-  },
-2. Modify Configuration.csAppConfig.cs to read MyName structure
-3. Modify HealthController so Heartbeat service also writes your full name and age
-*/
 

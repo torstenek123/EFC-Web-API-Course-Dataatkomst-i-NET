@@ -3,16 +3,14 @@ namespace Models
 {
 
     public class csComment: ISeed<csComment>, IComment{
-        public virtual Guid CommentId {get;set;} = Guid.NewGuid();
-        public virtual string Comment {get;set;}
-        public virtual DateTime Date {get;set;} 
+        public virtual Guid CommentId {get; set;} 
+        public virtual string Comment {get; set;}
+        public virtual DateTime? Date {get; set;} 
         public override string ToString() => $"Comment: {Comment} Date: {Date:d}";
 
-        //A comment must have 1 attraction
-        public virtual IAttraction attraction{get; set;}
+        public virtual IAttraction Attraction{get; set;}
 
-        //A comment can have 1 user
-        public virtual IUser user{get;set;}
+        public virtual IUser User{get;set;}
 
 
         #region Seeding

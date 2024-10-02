@@ -77,11 +77,28 @@ public class csMainDbContext : Microsoft.EntityFrameworkCore.DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
-        #region model the Views
-        #endregion
+        modelBuilder.Entity<csAttractionDbM>(eb =>
+        {
+            eb.Property(b => b.Description).HasColumnType("nvarchar(MAX)");
+        });
 
-        #region override modelbuilder
-        #endregion
+        modelBuilder.Entity("DbModels.csCommentDbM", b =>
+        {
+            b.HasOne("DbModels.csAttractionDbM", "AttractionDbM")
+                .WithMany("CommentsDbM")
+                .HasForeignKey("AttractionId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+
+            b.HasOne("DbModels.csUserDbM", "UserDbM")
+                .WithMany("CommentsDbM")
+                .HasForeignKey("UserId")
+                .OnDelete(DeleteBehavior.Cascade);
+
+            b.Navigation("AttractionDbM");
+
+            b.Navigation("UserDbM");
+        });
         
         base.OnModelCreating(modelBuilder);
     }
