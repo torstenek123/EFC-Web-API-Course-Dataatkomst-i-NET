@@ -1,3 +1,4 @@
+//Author: Torsten Ek
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using Models;
 using Models.DTO;
 using Services;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
 
 namespace AppWebApi.Controllers
 {
@@ -225,8 +226,8 @@ namespace AppWebApi.Controllers
         [ActionName("ReadUsers")]
         [ProducesResponseType(200, Type = typeof(csRespPageDTO<IUser>))]
         [ProducesResponseType(400, Type = typeof(string))]
-        public async Task<IActionResult> ReadAllUsersAsync(string seeded = "true", string flat = "true",
-                                                            string pageNr = "0", string pageSize = "10")
+        public async Task<IActionResult> ReadAllUsersAsync(string seeded = "true", string flat = "true", string pageNr = "0", 
+                                                        string pageSize = "10", string filter = null)
         {
             try
             {
@@ -234,7 +235,7 @@ namespace AppWebApi.Controllers
                 bool _flat = bool.Parse(flat);
                 int _pageNr = int.Parse(pageNr);
                 int _pageSize = int.Parse(pageSize);
-                var _info = await _service.ReadAllUsersAsync(_seeded, _flat, _pageNr, _pageSize);
+                var _info = await _service.ReadAllUsersAsync(_seeded, _flat, _pageNr, _pageSize, filter?.Trim()?.ToLower());
                 return Ok(_info);           
             }
             catch (Exception ex)
@@ -248,11 +249,13 @@ namespace AppWebApi.Controllers
         [ActionName("ReadAttractionsNoComments")]
         [ProducesResponseType(200, Type = typeof(csRespPageDTO<IAttraction>))]
         [ProducesResponseType(400, Type = typeof(string))]
-        public async Task<IActionResult> ReadAllNoCommentsAsync()
+        public async Task<IActionResult> ReadAllNoCommentsAsync(string pageNr = "0", string pageSize = "10")
         {
             try
             {
-                var _info = await _service.ReadAllNoCommentsAsync();
+                int _pageNumber = int.Parse(pageNr);
+                int _pageSize = int.Parse(pageSize);
+                var _info = await _service.ReadAllNoCommentsAsync(_pageNumber, _pageSize);
                 return Ok(_info);           
             }
             catch (Exception ex)

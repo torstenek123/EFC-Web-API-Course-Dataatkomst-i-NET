@@ -79,7 +79,7 @@ public class csMainDbContext : Microsoft.EntityFrameworkCore.DbContext
 
         modelBuilder.Entity<csAttractionDbM>(eb =>
         {
-            eb.Property(b => b.Description).HasColumnType("nvarchar(MAX)");
+            eb.Property(b => b.Description).HasColumnType("nvarchar(2000)");
         });
 
         modelBuilder.Entity("DbModels.csCommentDbM", b =>

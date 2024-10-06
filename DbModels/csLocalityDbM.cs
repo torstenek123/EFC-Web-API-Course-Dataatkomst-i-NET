@@ -15,6 +15,7 @@ namespace DbModels
 {
     [Table("Localities", Schema = "supusr")]
     [Index(nameof(LocalityId))]
+    [Index(nameof(Country),nameof(City),nameof(StreetAddress))]
     public class csLocalityDbM : csLocality, ISeed<csLocalityDbM>, IEquatable<csLocalityDbM>
     {
         [Key]       // for EFC Code first

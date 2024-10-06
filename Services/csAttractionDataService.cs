@@ -22,7 +22,7 @@ namespace Services
         private Guid _guid = Guid.NewGuid();
         private string _instanceHeartbeat;
 
-        public string InstanceHeartbeat => _instanceHeartbeat;
+        public static string Heartbeat {get;} = $"Heartbeat from namespace {nameof(Services)}, class {nameof(csAttractionDataService)}";
         public csAttractionDataService()
         {
             //only for layer verification
@@ -43,11 +43,12 @@ namespace Services
         public Task<IComment> ReadCommentAsync(bool flat, Guid _commentId) => _repo.ReadCommentAsync(flat, _commentId);
         public Task<ILocality> ReadLocalityAsync(bool flat, Guid _localityId) => _repo.ReadLocalityAsync(flat, _localityId);
 
-        public Task<csRespPageDTO<IAttraction>> ReadAllNoCommentsAsync() => _repo.ReadAllNoCommentsAsync();
+        public Task<csRespPageDTO<IAttraction>> ReadAllNoCommentsAsync(int pageNumber, int pageSize) => _repo.ReadAllNoCommentsAsync(pageNumber, pageSize);
         public Task<csRespPageDTO<IAttraction>> ReadAllAttractionsAsync(bool seeded, bool flat, int pageNumber, int pageSize, string filter)  
 
                     => _repo.ReadAllAttractionsAsync(seeded, flat, pageNumber, pageSize, filter);
-        public Task<csRespPageDTO<IUser>> ReadAllUsersAsync(bool seeded, bool flat, int pageNr, int pageSize) => _repo.ReadAllUsersAsync(seeded,  flat,  pageNr, pageSize);
+        public Task<csRespPageDTO<IUser>> ReadAllUsersAsync(bool seeded, bool flat, int pageNr, int pageSize, string filter) 
+                    => _repo.ReadAllUsersAsync(seeded,  flat,  pageNr, pageSize, filter);
         
         public Task<seedInfoDto> CreateSeed() => _repo.CreateSeedAsync();
         public Task<deleteSeedInfoDto> RemoveSeed(bool seeded) => _repo.RemoveSeedAsync(seeded);

@@ -13,8 +13,8 @@ namespace Services{
         public Task<IComment> ReadCommentAsync(bool flat, Guid _commentId);
         public Task<ILocality> ReadLocalityAsync(bool flat, Guid _localityId);
         public Task<csRespPageDTO<IAttraction>> ReadAllAttractionsAsync(bool seeded, bool flat, int pageNumber, int pageSize, string filter);
-        public Task<csRespPageDTO<IUser>> ReadAllUsersAsync(bool seeded, bool flat, int pageNr, int pageSize);
-        public Task<csRespPageDTO<IAttraction>> ReadAllNoCommentsAsync();
+        public Task<csRespPageDTO<IUser>> ReadAllUsersAsync(bool seeded, bool flat, int pageNr, int pageSize, string filter);
+        public Task<csRespPageDTO<IAttraction>> ReadAllNoCommentsAsync(int pageNumber, int pageSize);
 
         public Task<IAttraction> CreateAttractionAsync(csAttractionCUdto itemDto);
         public Task<IUser> CreateUserAsync(csUserCUdto itemDto);

@@ -16,8 +16,6 @@ namespace Models{
         public virtual string Description {get; set;}
         public virtual ILocality Locality {get; set;}
         
-
-        //save for after debug if (Comments!=null) Comments.ForEach(c => retStr += $"\n{c.ToString()}");
         public override string ToString()  {
             string retStr = $"{Name}\nCategory: {Category}\nDescription: {Description}\nComments:";
             string strComments = "";

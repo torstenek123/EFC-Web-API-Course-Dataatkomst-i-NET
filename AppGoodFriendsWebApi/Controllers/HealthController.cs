@@ -1,4 +1,5 @@
-﻿using System;
+﻿//Author: Torsten Ek
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,7 +13,6 @@ using Models;
 using Models.DTO;
 using Services;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace AppWebApi.Controllers
 {
@@ -29,8 +29,7 @@ namespace AppWebApi.Controllers
         {
             //to verify the layers are accessible
             string sRet = $"\nLayer access:\n{csAppConfig.Heartbeat}" +
-                $"\n{csLoginService.Heartbeat}" +
-                $"\n{csJWTService.Heartbeat}";
+                $"\n{csAttractionDataService.Heartbeat}";
                 
             //to verify secret access source
             sRet += $"\n\nSecret source:\n{csAppConfig.SecretSource}";

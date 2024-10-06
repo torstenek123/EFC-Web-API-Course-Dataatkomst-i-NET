@@ -15,11 +15,7 @@ namespace DbModels
 {
     [Table("Comments", Schema = "supusr")]
     [Index(nameof(CommentId))]
-    [Index(nameof(CommentId), nameof(UserId))]
-    [Index(nameof(UserId), nameof(CommentId))]
-    [Index(nameof(AttractionId), nameof(CommentId))]
-    [Index(nameof(CommentId), nameof(AttractionId))]
-    
+    [Index(nameof(Comment))]
     public class csCommentDbM : csComment, ISeed<csCommentDbM>, IEquatable<csCommentDbM>
     {
         [Key]
@@ -55,14 +51,14 @@ namespace DbModels
         #region helper methods
         public csCommentDbM ExcludeNavProps() 
         {
-            //UserDbM = null;
-            AttractionDbM = null;
+            UserDbM = null;
+            //AttractionDbM = null;
             return this;
         }
         public csCommentDbM ExcludeNavProps2() 
         {
             UserDbM = null;
-            //AttractionDbM = null;
+            AttractionDbM = null;
             return this;
         }
 

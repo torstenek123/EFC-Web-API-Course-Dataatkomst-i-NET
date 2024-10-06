@@ -352,195 +352,136 @@ namespace SeedGenerator
             {
                 _quotes = new List<csSeedQuote>
                 {
-                    //About Love
-                    new csSeedQuote
-                    {
-                        jsonQuote = "Would I rather be feared or loved? Easy. Both. I want people to be afraid of how much they love me.",
-                        jsonAuthor = "Michael Scott, The Office"},
-                    new csSeedQuote
-                    {
-                        jsonQuote = "All you need is love. But a little chocolate now and then doesn’t hurt.",
-                        jsonAuthor = "Charles M. Schulz"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "Before you marry a person, you should first make them use a computer with slow Internet to see who they really are.",
-                        jsonAuthor = "Will Ferrell"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "I love being married. It’s so great to find one special person you want to annoy for the rest of your life.",
-                        jsonAuthor = "Rita Rudner"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "If love is the answer, can you please rephrase the question?",
-                        jsonAuthor = "Lily Tomlin"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "Love can change a person the way a parent can change a baby—awkwardly, and often with a great deal of mess.",
-                        jsonAuthor = "Lemony Snicket"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "Love is a fire. But whether it is going to warm your hearth or burn down your house, you can never tell.",
-                        jsonAuthor = "Joan Crawford"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "A successful marriage requires falling in love many times, always with the same person.",
-                        jsonAuthor = "Mignon McLaughlin"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "I love you with all my belly. I would say my heart, but my belly is bigger.",
-                        jsonAuthor = "Unknown"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "The four most important words in any marriage—I’ll do the dishes.",
-                        jsonAuthor = "Unknown"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "I love you more than coffee but not always before coffee.",
-                        jsonAuthor = "Unknown"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "You know that tingly little feeling you get when you like someone? That’s your common sense leaving your body.",
-                        jsonAuthor = "Unknown"
-                    },
-
-                    //About Work
-                    new csSeedQuote
-                    {
-                        jsonQuote = "I choose a lazy person to do a hard job, because a lazy person will find an easy way to do it.",
-                        jsonAuthor = "Bill Gates"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "Doing nothing is very hard to do… you never know when you’re finished.",
-                        jsonAuthor = "Leslie Nielsen"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "It takes less time to do a thing right, than it does to explain why you did it wrong.",
-                        jsonAuthor = "Henry Wadsworth Longfellow"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "Most of what we call management consists of making it difficult for people to get their work done.",
-                        jsonAuthor = "Peter Drucker"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "It is better to have one person working with you than three people working for you.",
-                        jsonAuthor = "Dwight D. Eisenhower"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "The best way to appreciate your job is to imagine yourself without one.",
-                        jsonAuthor = "Oscar Wilde"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "I hate when I lose things at work, like pens, papers, sanity and dreams.",
-                        jsonAuthor = "Unknown"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "Creativity is allowing yourself to make mistakes. Art is knowing which ones to keep.",
-                        jsonAuthor = "Scott Adams"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "My keyboard must be broken, I keep hitting the escape key, but I’m still at work.",
-                        jsonAuthor = "Unknown"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "Work is against human nature. The proof is that it makes us tired.",
-                        jsonAuthor = "Michel Tournier"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "The reward for good work is more work.",
-                        jsonAuthor = "Francesca Elisia"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "Executive ability is deciding quickly and getting somebody else to do the work.",
-                        jsonAuthor = "Earl Nightingale"
-                    },
-
-                    //About Procrastination
-                    new csSeedQuote
-                    {
-                        jsonQuote = "I never put off till tomorrow what I can do the day after.",
-                        jsonAuthor = "Oscar Wilde"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "I think of myself as something of a connoisseur of procrastination, creative and dogged in my approach to not getting things done.",
-                        jsonAuthor = "Susan Orlean"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "Procrastination is like a credit card: it's a lot of fun until you get the bill.",
-                        jsonAuthor = "Christopher Parker"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "Nothing says work efficiency like panic mode.",
-                        jsonAuthor = "Don Roff"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "I'm going to stop putting things off, starting tomorrow!",
-                        jsonAuthor = "Sam Levenson"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "Procrastination always gives you something to look forward to.",
-                        jsonAuthor = "Joan Konner"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "The time you enjoy wasting is not wasted time.",
-                        jsonAuthor = "Bertrand Russell"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "Procrastination is the art of keeping up with yesterday.",
-                        jsonAuthor = "Don Marquis"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "If it weren't for the last minute, nothing would get done.",
-                        jsonAuthor = "Rita Mae Brown"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "I like work; it fascinates me. I can sit and look at it for hours.",
-                        jsonAuthor = "Jerome K. Jerome"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "Procrastination isn't the problem. It's the solution. It's the universe's way of saying stop, slow down, you move too fast.",
-                        jsonAuthor = "Ellen DeGeneres"
-                    },
-                    new csSeedQuote
-                    {
-                        jsonQuote = "Procrastinate now, don't put it off.",
-                        jsonAuthor = "Ellen DeGeneres"
-                    },
+                    //Movie quotes made into comments
                     new csSeedQuote
                     {
                         jsonQuote = "This is my comment, there are many like this but this one's mine",
-                        jsonAuthor = "Anthony Swofford"
-                    } 
+                        jsonAuthor = "Anthony Swofford, Jarhead"
+                    },
+                    new csSeedQuote
+                    {
+                        jsonQuote = "I'm not a comment. I'm just ahead of the curve",
+                        jsonAuthor = "Louis Bloom, Nightcrawler"
+                    },
+                    new csSeedQuote
+                    {
+                        jsonQuote = "I'm not afraid of dying. I'm afraid of not commenting",
+                        jsonAuthor = "Billy Hope, Southpaw"
+                    },
+                    new csSeedQuote
+                    {
+                        jsonQuote = "You can't do this, you don't have to do this. You can't just let this comment go",
+                        jsonAuthor = "Robert Graysmith, Zodiac"
+                    },
+                    new csSeedQuote
+                    {
+                        jsonQuote = "You know what they call a Quarter Pounder with Cheese in Paris? They call it a 'Royale with Cheese",
+                        jsonAuthor = "Jules Winnfield, Pulp fiction"
+                    },
+                    new csSeedQuote
+                    {
+                        jsonQuote = "When you're a user, you have to keep your eye on the comment.",
+                        jsonAuthor = "Jules Winnfield, Pulp fiction"
+                    },
+                    new csSeedQuote
+                    {
+                        jsonQuote = "The truth is, you're the one who taught me about the unholy comments",
+                        jsonAuthor = "Jules Winnfield, Pulp fiction"
+                    },
+                    
+                    new csSeedQuote
+                    {
+                        jsonQuote = "If you want to win the comment lottery, you have to make the money to buy a ticket",
+                        jsonAuthor = "Billy Hope, Southpaw"
+                    },
+                    new csSeedQuote
+                    {
+                        jsonQuote = "You commentin' to me? You commentin' to me? Well, I'm the only one here",
+                        jsonAuthor = "Travis Bickle, Taxi Driver"
+                    },
+                    new csSeedQuote
+                    {
+                        jsonQuote = "I'm not a 'user'! I'm a human being",
+                        jsonAuthor = "Jake La Motta, Raging Bull"
+                    },
+                    new csSeedQuote
+                    {
+                        jsonQuote = "As far back as I can remember, I always wanted to be a commenter",
+                        jsonAuthor = "Henry Hill, Good fellas"
+                    },
+                    new csSeedQuote
+                    {
+                        jsonQuote = "You can't handle the truth! Son, we live in a world that has comments, and those comments have to be guarded by men with guns.",
+                        jsonAuthor = "Colonel Jessup,  A few good men"
+                    },
+
+                    new csSeedQuote
+                    {
+                        jsonQuote = "I'm not leaving! I'm not leaving! I'm not f***ing leaving! The commenting goes on!",
+                        jsonAuthor = "Jordan belfort, The wolf of wallstreet"
+                    },
+                    new csSeedQuote
+                    {
+                        jsonQuote = "I'm Rick Dalton. It's my username",
+                        jsonAuthor = "Rick dalton, Once upon a time in hollywood"
+                    },
+                    new csSeedQuote
+                    {
+                        jsonQuote = "I'm not afraid to die. I'm just afraid of losing my comments",
+                        jsonAuthor = "actor, Marvins room"
+                    },
+                    new csSeedQuote
+                    {
+                        jsonQuote = "We really did have everything, didn't we? I mean, we had the comments",
+                        jsonAuthor = "actor, Don't look up"
+                    },
+                    new csSeedQuote
+                    {
+                        jsonQuote = "The only thing I'm addicted to right now is commenting.",
+                        jsonAuthor = "Jordan Belfort, The wolf of wallstreet"
+                    },
+                    new csSeedQuote
+                    {
+                        jsonQuote = "Get busy commenting, or get busy dying",
+                        jsonAuthor = "Ellis Boyd Redding, Shawshank redemption "
+                    },
+                    new csSeedQuote
+                    {
+                        jsonQuote = "Say hello to my little comment!",
+                        jsonAuthor = "Tony Montana, Scarface"
+                    },
+                    
+                    new csSeedQuote
+                    {
+                        jsonQuote = "The first rule of Comment Club is: You do not talk about Comment Club",
+                        jsonAuthor = "Some crazy dude, Fight Club"
+                    },
+                    new csSeedQuote
+                    {
+                        jsonQuote = "No one ever made a difference by commenting like everyone else",
+                        jsonAuthor = "P.T barnum, The Greatest Showman"
+                    },
+                    new csSeedQuote
+                    {
+                        jsonQuote = "I'm not a hero. I'm just a regular guy with a great comment",
+                        jsonAuthor = "Peter Quill, Guardians of the galaxy"
+                    },
+                    new csSeedQuote
+                    {
+                        jsonQuote = "The path of the righteous man is beset on all sides by the inequities of the selfish and the tyranny of evil comments",
+                        jsonAuthor = "Jules Winnfield, Pulp fiction"
+                    },
+                    new csSeedQuote
+                    {
+                        jsonQuote = "I'm not a monster. I'm just a woman who made a terrible comment",
+                        jsonAuthor = "Aileen,  Monster"
+                    },
+
+
+                    
+                    
+
+
                 },
                 _latin = new List<csSeedLatin> {
                         new csSeedLatin {  jsonParagraph =

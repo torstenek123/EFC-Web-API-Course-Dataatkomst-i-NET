@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DbContext.Migrations.SqlServerDbContext
 {
     [DbContext(typeof(csMainDbContext.SqlServerDbContext))]
-    [Migration("20240929193449_miInitial")]
+    [Migration("20241003123959_miInitial")]
     partial class miInitial
     {
         /// <inheritdoc />
@@ -36,7 +36,7 @@ namespace DbContext.Migrations.SqlServerDbContext
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(MAX)");
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<Guid>("LocalityId")
                         .HasColumnType("uniqueidentifier");
@@ -56,6 +56,10 @@ namespace DbContext.Migrations.SqlServerDbContext
                     b.HasIndex("AttractionId");
 
                     b.HasIndex("LocalityId");
+
+                    b.HasIndex("Seeded");
+
+                    b.HasIndex("Seeded", "Category", "Description", "Name");
 
                     b.ToTable("Attractions", "supusr");
                 });
@@ -84,15 +88,13 @@ namespace DbContext.Migrations.SqlServerDbContext
 
                     b.HasKey("CommentId");
 
+                    b.HasIndex("AttractionId");
+
+                    b.HasIndex("Comment");
+
                     b.HasIndex("CommentId");
 
-                    b.HasIndex("AttractionId", "CommentId");
-
-                    b.HasIndex("CommentId", "AttractionId");
-
-                    b.HasIndex("CommentId", "UserId");
-
-                    b.HasIndex("UserId", "CommentId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Comments", "supusr");
                 });
@@ -124,6 +126,8 @@ namespace DbContext.Migrations.SqlServerDbContext
                     b.HasKey("LocalityId");
 
                     b.HasIndex("LocalityId");
+
+                    b.HasIndex("Country", "City", "StreetAddress");
 
                     b.ToTable("Localities", "supusr");
                 });
@@ -157,7 +161,11 @@ namespace DbContext.Migrations.SqlServerDbContext
 
                     b.HasKey("UserId");
 
+                    b.HasIndex("Seeded");
+
                     b.HasIndex("UserId");
+
+                    b.HasIndex("Seeded", "Role", "UserName");
 
                     b.ToTable("Users", "dbo");
                 });

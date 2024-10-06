@@ -15,6 +15,8 @@ namespace DbModels
 {   
     [Table("Users", Schema = "dbo")]
     [Index(nameof(UserId))]
+    [Index(nameof(Seeded))]
+    [Index(nameof(Seeded),nameof(Role), nameof(UserName))]
     public class csUserDbM : csUser, IEquatable<csUserDbM>, ISeed<csUserDbM>
 	{
         [Key]     

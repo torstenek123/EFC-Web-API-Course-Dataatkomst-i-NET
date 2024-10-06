@@ -1,3 +1,4 @@
+//Author: Torsten Ek
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using Models;
 using Models.DTO;
 using Services;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
 
 namespace AppWebApi.Controllers
 {

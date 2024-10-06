@@ -17,5 +17,3 @@ foreach (var item in _attractions){
     System.Console.WriteLine(item);
 }
 
-//todo:
-//öndra commentsdbm att inte tillåta null userid

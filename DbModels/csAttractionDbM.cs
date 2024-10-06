@@ -16,6 +16,8 @@ namespace DbModels
 
     [Table("Attractions", Schema = "supusr")]
     [Index(nameof(AttractionId))]
+    [Index(nameof(Seeded))]
+    [Index(nameof(Seeded),nameof(Category),nameof(Description),nameof(Name))]
     public class csAttractionDbM : csAttraction, ISeed<csAttractionDbM>, IEquatable<csAttractionDbM>
     {
         [Key]       // for EFC Code first

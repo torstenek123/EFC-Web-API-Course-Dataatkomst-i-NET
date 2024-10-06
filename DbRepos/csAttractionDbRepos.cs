@@ -1,3 +1,4 @@
+//Author: Torsten Ek
 using Configuration;
 using Models;
 using Models.DTO;
@@ -14,7 +15,7 @@ using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Text;
 using Seido.Utilities.SeedGenerator;
 using System.Linq.Expressions;
-//Author: Torsten Ek
+
 
 
 namespace DbRepos;
@@ -130,6 +131,36 @@ public class csAttractionDbRepos
     #endregion
 
     #region reading
+
+    /*because I get an error from efc saying i can't do ToString(and converting to string defeats purpose) on an enum in a dbcontext.linqstatement
+    i have to use a different approach than  .Contains for filtering on category, which is seeing if the filter has a 
+    corresponding enCategories value,I do that by mapping the enum to a dictionary and using Linq to find the category.ToString() key 
+    matching the filter and then using the corresponding int value in the Query where clause to see if the category matches the filterToInt.*/
+    
+    //I decided to make it generic for enums since i'm probably going to reuse this method 
+    private int filter_to_int_from_enum<TEnum>(string filter) where TEnum : struct
+        {
+            if (typeof(TEnum).IsEnum)
+            {
+                Dictionary<string, int> enumDictionary = new Dictionary<string, int>();
+                
+                //mapping enum to dictionary 
+                foreach(TEnum element in Enum.GetValues(typeof(TEnum)))
+                {
+                    enumDictionary.Add(element.ToString(), Convert.ToInt16(element));
+                }
+                
+                //searches for key in dictionary that matches filter and returns integer value
+                return enumDictionary
+                            .Where(f => f.Key == filter)
+                            .Select(f => f.Value)
+                            .FirstOrDefault(-9999999);
+
+            }
+            throw new ArgumentException("Not an enum type");
+        }
+    
+    //reads all attractions
     public async Task<csRespPageDTO<IAttraction>> ReadAllAttractionsAsync(bool seeded, bool flat, int pageNumber, int pageSize, string filter)
     {
         using (var db = csMainDbContext.DbContext("sysadmin"))
@@ -146,18 +177,14 @@ public class csAttractionDbRepos
                 .Include(a => a.LocalityDbM)
                 .AsNoTracking();
             }
-            
-            /*
-            because I get error from efc saying i can't do ToString on an enum and the error saying i should implement .AsEnumarble
-            I implement .AsEnumerable and it works.
-            */
-            
-            
+
+            //helper method to convert filter to int if filter exists in enCategories
+            int filterToInt = filter_to_int_from_enum<enCategories>(filter);
+
             var _count = await _query
-            .AsEnumerable()
             .Where(a => a.Seeded == seeded && 
                         (   
-                            a.Category.ToString().ToLower().Contains(filter) ||
+                            (int)a.Category == filterToInt ||
                             a.Description.ToLower().Contains(filter) ||
                             a.Name.ToLower().Contains(filter)||
                             a.LocalityDbM.Country.ToLower().Contains(filter) ||
@@ -171,12 +198,14 @@ public class csAttractionDbRepos
             var _attractions = await _query
 
             .Where(a => a.Seeded == seeded && 
-                        (a.Category.ToString().ToLower().Contains(filter) ||
-                        a.Description.ToLower().Contains(filter) ||
-                        a.Name.ToLower().Contains(filter) ||
-                        a.LocalityDbM.Country.ToLower().Contains(filter) ||
-                        a.LocalityDbM.City.ToLower().Contains(filter)||
-                        a.LocalityDbM.StreetAddress.ToLower().Contains(filter))
+                        (
+                            (int)a.Category == filterToInt ||
+                            a.Description.ToLower().Contains(filter) ||
+                            a.Name.ToLower().Contains(filter) ||
+                            a.LocalityDbM.Country.ToLower().Contains(filter) ||
+                            a.LocalityDbM.City.ToLower().Contains(filter)||
+                            a.LocalityDbM.StreetAddress.ToLower().Contains(filter)
+                        )
                     )
     
             
@@ -190,23 +219,22 @@ public class csAttractionDbRepos
             {
                 
                 DbItemsCount = _count,
-
                 PageItems =  _attractions.ToList<IAttraction>(),
 
                 PageNr = pageNumber,
                 PageSize = pageSize
-
-                
             };
             _logger.LogInformation("executed ReadAllAttractionsAsync()");
             return _info;
         }
     }
-    public async Task<csRespPageDTO<IUser>> ReadAllUsersAsync(bool seeded, bool flat, int pageNumber, int pageSize)
+    
+    //reads all users and their comments
+    public async Task<csRespPageDTO<IUser>> ReadAllUsersAsync(bool seeded, bool flat, int pageNumber, int pageSize, string filter)
     {
         using (var db = csMainDbContext.DbContext("sysadmin"))
         {
-            
+            filter ??= "";
             IQueryable<csUserDbM> _query;
             if (flat)
             {
@@ -218,11 +246,25 @@ public class csAttractionDbRepos
                 .Include(u => u.CommentsDbM)
                 .AsNoTracking();
             }
+
+            //helper method to convert filter to int if filter exists in enRoles
+            int filterToInt = filter_to_int_from_enum<enRoles>(filter);
+
             var _count = await _query
-                    .Where(u => u.Seeded == seeded)
-                    .CountAsync();
+                .Where(u => u.Seeded == seeded &&
+                        (
+                            (int)u.Role == filterToInt||
+                            u.UserName.ToLower().Contains(filter)
+                        ))
+                .CountAsync();
+
+
             var _users = await _query
-                .Where(u => u.Seeded == seeded)
+                .Where(u => u.Seeded == seeded &&
+                        (
+                            (int)u.Role == filterToInt||
+                            u.UserName.ToLower().Contains(filter)
+                        ))
                 .Skip(pageNumber * pageSize)
                 .Take(pageSize)
             .ToListAsync();
@@ -272,7 +314,7 @@ public class csAttractionDbRepos
             }
             
             var _attractions = await _query.ToListAsync();
-            _attractions.ForEach(a => a.CommentsDbM?.ForEach(c => c.ExcludeNavProps()));  
+            _attractions.ForEach(a => a.CommentsDbM?.ForEach(c => c.ExcludeNavProps2()));  
             _attractions.ForEach(a => a.LocalityDbM?.ExcludeNavProps());     
                      
 
@@ -370,18 +412,30 @@ public class csAttractionDbRepos
         }
     }
     //Reads all attractions with no comments
-    public async Task<csRespPageDTO<IAttraction>> ReadAllNoCommentsAsync()
+    public async Task<csRespPageDTO<IAttraction>> ReadAllNoCommentsAsync(int pageNumber, int pageSize)
     {
         using (var db = csMainDbContext.DbContext("sysadmin"))
         {
             IQueryable<csAttractionDbM> _query = db.Attractions
                 .Include(a => a.CommentsDbM)
+                .Where(a => !a.CommentsDbM.Any())
                 .Include(a => a.LocalityDbM)
                 .AsNoTracking();
 
-            var _info = new csRespPageDTO<IAttraction>(){
-                PageItems = await _query.ToListAsync<IAttraction>(),
-                DbItemsCount = await _query.Where( a => !a.CommentsDbM.Any() ).CountAsync(),
+            var _attractions = await _query
+                .Skip(pageNumber * pageSize)
+                .Take(pageSize)
+                .ToListAsync<csAttractionDbM>();
+            _attractions.ForEach(a => a.LocalityDbM.ExcludeNavProps());
+
+            var _info = new csRespPageDTO<IAttraction>()
+            {
+                PageItems = _attractions.ToList<IAttraction>(),
+                DbItemsCount = await _query.CountAsync(),
+
+
+                PageNr = pageNumber,
+                PageSize = pageSize
             };
             _logger.LogInformation("executed ReadAllNoCommentsAsync");
             return _info;

@@ -62,7 +62,7 @@ namespace DbContext.Migrations.SqlServerDbContext
                     Name = table.Column<string>(type: "nvarchar(200)", nullable: false),
                     Category = table.Column<int>(type: "int", nullable: false),
                     strCategory = table.Column<string>(type: "nvarchar(200)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(2000)", nullable: false),
                     Seeded = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -121,10 +121,28 @@ namespace DbContext.Migrations.SqlServerDbContext
                 column: "LocalityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_AttractionId_CommentId",
+                name: "IX_Attractions_Seeded",
+                schema: "supusr",
+                table: "Attractions",
+                column: "Seeded");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attractions_Seeded_Category_Description_Name",
+                schema: "supusr",
+                table: "Attractions",
+                columns: new[] { "Seeded", "Category", "Description", "Name" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_AttractionId",
                 schema: "supusr",
                 table: "Comments",
-                columns: new[] { "AttractionId", "CommentId" });
+                column: "AttractionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_Comment",
+                schema: "supusr",
+                table: "Comments",
+                column: "Comment");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_CommentId",
@@ -133,28 +151,34 @@ namespace DbContext.Migrations.SqlServerDbContext
                 column: "CommentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_CommentId_AttractionId",
+                name: "IX_Comments_UserId",
                 schema: "supusr",
                 table: "Comments",
-                columns: new[] { "CommentId", "AttractionId" });
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_CommentId_UserId",
+                name: "IX_Localities_Country_City_StreetAddress",
                 schema: "supusr",
-                table: "Comments",
-                columns: new[] { "CommentId", "UserId" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_UserId_CommentId",
-                schema: "supusr",
-                table: "Comments",
-                columns: new[] { "UserId", "CommentId" });
+                table: "Localities",
+                columns: new[] { "Country", "City", "StreetAddress" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Localities_LocalityId",
                 schema: "supusr",
                 table: "Localities",
                 column: "LocalityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Seeded",
+                schema: "dbo",
+                table: "Users",
+                column: "Seeded");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Seeded_Role_UserName",
+                schema: "dbo",
+                table: "Users",
+                columns: new[] { "Seeded", "Role", "UserName" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_UserId",
